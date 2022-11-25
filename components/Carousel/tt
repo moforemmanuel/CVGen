@@ -1,0 +1,102 @@
+<Box className="swiper-slide" maxH={{ md: '85vh' }}>
+            <CImage
+              src={img2.src}
+              width={3000}
+              height={3000 / ratio}
+              layout="fill"
+              priority
+              filter={{ md: 'brightness(20%)' }}
+              onLoadingComplete={({ naturalWidth, naturalHeight }) =>
+                setRatio(naturalWidth / naturalHeight)
+              }
+            />
+
+            <Box
+              as={motion.div}
+              animation={animation}
+              display={{ base: 'none', md: 'block' }}
+              position="absolute"
+              top="4rem"
+              left="1%"
+              color="whiteAlpha.400"
+            >
+              <Heading
+                textTransform="capitalize"
+                color="whiteAlpha.900"
+                align="center"
+                fontSize="5xl"
+              >
+                Welcome To <br />
+                the home of cavoodles
+              </Heading>
+            </Box>
+
+            <Box
+              as={motion.div}
+              animation={animation2}
+              display={{ base: 'none', md: 'block' }}
+              position="absolute"
+              top="18rem"
+              left="1%"
+              maxW="40%"
+              color="whiteAlpha.400"
+            >
+              <Heading color="whiteAlpha.900" align="center">
+                Family raised, well nourished and registered Cavoodle puppies at
+                your reach.
+              </Heading>
+            </Box>
+          </Box>
+
+          {/* Next Slider */}
+
+          <Box className="swiper-slide" maxH={{ md: '85vh' }}>
+            <CImage
+              src={img3.src}
+              width={3000}
+              height={3000 / ratio}
+              layout="fill"
+              priority
+              filter={{ md: 'brightness(20%)' }}
+              onLoadingComplete={({ naturalWidth, naturalHeight }) =>
+                setRatio(naturalWidth / naturalHeight)
+              }
+            />
+
+            <Box
+              // as={motion.div}
+              // animation={animation}
+              className="animate__animated animate__bounce"
+              display={{ base: 'none', md: 'block' }}
+              position="absolute"
+              top="4rem"
+              left="1%"
+              color="whiteAlpha.400"
+            >
+              <Heading
+                textTransform="capitalize"
+                color="whiteAlpha.900"
+                align="center"
+                fontSize="5xl"
+              >
+                Welcome To <br />
+                the home of cavoodles
+              </Heading>
+            </Box>
+
+            <Box
+              as={motion.div}
+              animation={animation2}
+              display={{ base: 'none', md: 'block' }}
+              position="absolute"
+              top="18rem"
+              left="1%"
+              maxW="40%"
+              color="whiteAlpha.400"
+            >
+              <Heading color="whiteAlpha.900" align="center">
+                Family raised, well nourished and registered Cavoodle puppies at
+                your reach.
+              </Heading>
+            </Box>
+          </Box>
