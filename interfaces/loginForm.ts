@@ -1,5 +1,5 @@
 type loginFormValues = {
-  matricule: string;
+  email: string;
   password: string;
   rememberMe: boolean;
 };

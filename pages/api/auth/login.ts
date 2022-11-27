@@ -15,24 +15,24 @@ const handler = nc<NextApiRequest, NextApiResponse>({
 });
 
 handler.post(async (req, res) => {
-  console.log('in me');
+  console.log('in me /api/login');
   const client = getClient(process.env.SANITY_AUTH_TOKEN as string);
 
   const {
-    matricule,
+    email,
     password
   } = req.body;
 
   try {
     const data = await client.fetch(
-      `*[_type == "user" && matricule == $matricule][0]`,
+      `*[_type == "user" && email == $email][0]`,
       {
-        matricule
+        email
       }
     );
 
     if (!data) {
-      res.status(401).send({ message: 'No user with that Matricule' });
+      res.status(401).send({ message: 'No user with that Email' });
 
     }
 
@@ -54,7 +54,7 @@ handler.post(async (req, res) => {
     }
 
   } catch (err) {
-    console.log('from /api/auth/signup/ :', err);
+    console.log('from /api/auth/login/ :', err);
     res.status(500).send(err);
   }
 })

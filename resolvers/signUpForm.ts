@@ -19,11 +19,12 @@ const AddUserSchema = yup.object().shape({
   password: yup
     .string()
     .required('Please enter a password')
-    .min(6, 'Password should be atleast 6 characters'),
+    .matches(/^uba\d{2}\w\d{4}$/gim, 'Please Enter a valid Password'),
+
   confirmPassword: yup
     .string()
-    .required('Please enter a password')
-    .min(6, 'Password should be atleast 6 characters'),
-});
+    .required('Please enter a Confirmation password')
+    .matches(/^uba\d{2}\w\d{4}$/gim, 'Please Enter a valid Confirmation Password'),
+  });
 
 export default AddUserSchema;

@@ -13,7 +13,7 @@ import {
   useColorModeValue,
   FormErrorMessage,
 } from '@chakra-ui/react';
-
+import NextLink from 'next/link';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -48,7 +48,7 @@ export default function SimpleCard() {
       }
 
       if (formData) {
-        setValue('matricule', formData.matricule);
+        setValue('email', formData.email);
         setValue('password', formData.password);
         setValue('rememberMe', formData.rememberMe);
       }
@@ -69,6 +69,12 @@ export default function SimpleCard() {
               to enjoy all of our cool <Link color={'blue.400'}>features</Link>{' '}
               ✌️
             </Text>
+            <Text>
+              Don't have an account?{' '}
+              <NextLink href="/auth/signup" passHref>
+                <Link color={'blue.400'}>Sign Up</Link>
+              </NextLink>
+            </Text>
           </Stack>
           <Box
             rounded={'lg'}
@@ -80,13 +86,13 @@ export default function SimpleCard() {
               <FormControl
                 id="matricule"
                 // @ts-ignore
-                isInvalid={errors.matricule}
+                isInvalid={errors.email}
                 isRequired
               >
-                <FormLabel>Matricule</FormLabel>
-                <Input {...register('matricule')} type="text" />
+                <FormLabel>Email</FormLabel>
+                <Input {...register('email')} type="email" />
                 <FormErrorMessage>
-                  {errors.matricule && errors.matricule.message}
+                  {errors.email && errors.email.message}
                 </FormErrorMessage>
               </FormControl>
               <FormControl

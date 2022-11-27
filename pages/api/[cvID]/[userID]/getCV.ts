@@ -18,7 +18,9 @@ handler.get(async (req, res) => {
   console.log('in me cv id', req.query.cvID);
   const client = getClient(process.env.SANITY_AUTH_TOKEN as string);
 
-
+  if (req.query.cvID == undefined || req.query.userID == undefined) {
+    res.status(404).send("The requested resource was not found")
+  }
   try {
     const data = await client.fetch(
       `*[_type == "cv" && _id == $id && user._ref == $ref][0]`, {

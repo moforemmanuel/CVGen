@@ -26,7 +26,6 @@ import registerHandler from '../../handlers/registerHandler';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-
 import AddUserSchema from '../../resolvers/signUpForm';
 
 // const resolver: Resolver<FormValues> = async (values) => {
@@ -188,7 +187,7 @@ export default function SignupCard() {
                   </InputRightElement>
                 </InputGroup>
                 <FormErrorMessage>
-                  {errors?.confirmPassword && errors.confirmPassword.message}
+                  {errors?.password && errors.password.message}
                 </FormErrorMessage>
               </FormControl>
               <FormControl

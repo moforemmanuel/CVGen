@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   Heading,
   Input,
+  Stack,
   Text,
 } from '@chakra-ui/react';
 import Cookies from 'js-cookie';
@@ -23,11 +24,13 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import FullPageLoader from '../components/fullPageLoader/FullPageLoader';
 import CImage from '../components/CImage/CImage';
 import { toast } from 'react-toastify';
+import { Context } from '../context/Context';
+import Swal from 'sweetalert2';
 
 const Home = () => {
   const router = useRouter();
   const [isMounted, setIsMounted] = React.useState<boolean>(false);
-  const [user, setUser] = React.useState<any>(undefined);
+  // const [user, setUser] = React.useState<any>(undefined);
   const imageRef = React.useRef();
   // @ts-ignore
   const [selectedFile, setSelectedFile] = React.useState<File | undefined>();
@@ -37,17 +40,21 @@ const Home = () => {
     register,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<CV>();
-  // { resolver: yupResolver(SubmitCVResolver) }
+  } = useForm<CV>({ resolver: yupResolver(SubmitCVResolver) });
+
+  const { state, dispatch } = React.useContext(Context);
+  const { user } = state;
+  //
 
   React.useEffect(() => {
-    if (Cookies.get('user')) {
-      setUser(JSON.parse(Cookies.get('user') as string));
-    }
+    // if (window && Cookies.get('user')) {
+    //   setUser(JSON.parse(Cookies.get('user') as string));
+    // }
     //  else {
     //   router.push(`/auth/login?redirect=${router.pathname}`);
     // }
 
+    // console.log(user);
     setIsMounted(true);
 
     if (!selectedFile) {
@@ -62,11 +69,18 @@ const Home = () => {
     return () => URL.revokeObjectURL(objectUrl);
   }, [selectedFile]);
 
+  // React.useEffect(() => {
+  //   if (user?.cvID) {
+  //     toast.success('CV exists');
+  //     router.push('/cv');
+  //   }
+  // }, []);
+
   const onSelectFile = (
     e: React.FormEvent<HTMLInputElement>
     // files: FileList
   ) => {
-    let files = e.target.files;
+    let files = e.currentTarget.files;
     if (!files || files.length === 0) {
       setSelectedFile(undefined);
       return;
@@ -97,7 +111,8 @@ const Home = () => {
     return <FullPageLoader />;
   }
   return (
-    isMounted && (
+    isMounted &&
+    user && (
       <>
         <chakra.header
           id="header"
@@ -126,9 +141,9 @@ const Home = () => {
               <Heading> Please Sign In to use our Services</Heading>
               <Button
                 colorScheme="blue"
-                onClick={() =>
-                  router.push(`/auth/login?redirect=${router.pathname}`)
-                }
+                onClick={() => {
+                  router.push(`/auth/login?redirect=${router.pathname}`);
+                }}
               >
                 Sign In
               </Button>
@@ -150,35 +165,63 @@ const Home = () => {
                 </Heading>
                 <Text>Fill the form below to get started</Text>
                 <Text>or</Text>
-                <Button
-                  rounded={0}
-                  transition={'all 0.5s'}
-                  _hover={{
-                    color: 'blue.400',
-                    bg: 'white',
-                    borderWidth: 'thin',
-                    borderColor: 'blue.400',
-                    borderStyle: 'solid',
-                    transform: 'scale(1.1)',
-                  }}
-                  colorScheme="blue"
-                  onClick={logoutHandler}
-                >
-                  Logout
-                </Button>
+                <Stack direction={['column', 'row']}>
+                  <Button
+                    rounded={0}
+                    transition={'all 0.5s'}
+                    _hover={{
+                      color: 'red.400',
+                      bg: 'white',
+                      borderWidth: 'thin',
+                      borderColor: 'red.400',
+                      borderStyle: 'solid',
+                      transform: 'scale(1.1)',
+                    }}
+                    colorScheme="red"
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </Button>
+                  <Button
+                    rounded={0}
+                    transition={'all 0.5s'}
+                    _hover={{
+                      color: 'blue.400',
+                      bg: 'white',
+                      borderWidth: 'thin',
+                      borderColor: 'blue.400',
+                      borderStyle: 'solid',
+                      transform: 'scale(1.1)',
+                    }}
+                    colorScheme="blue"
+                    onClick={() => {
+                      Swal.fire('Please wait ...');
+                      Swal.showLoading();
+                      router
+                        .push(`${user.cvID}/${user._id}/cv`)
+                        .then(() => Swal.close());
+                      // Swal.close();
+                    }}
+                  >
+                    View CV
+                  </Button>
+                </Stack>
               </Flex>
               <Box bg="gray.50" p={3}>
                 <chakra.form
                   p={2}
                   my={3}
-                  className="needs-validation my-3"
+                  // className="needs-validation my-3"
                   onSubmit={handleSubmit(submitCVHandler)}
                   action=""
                   noValidate
                   bg="white"
                   shadow="lg"
+                  w={['90%', '80%', '50%']}
+                  m="0 auto"
                 >
-                  <div
+                  <chakra.div
+                    w="100%"
                     className="container col-md-6"
                     // style={{ border: 'thin solid red' }}
                   >
@@ -221,22 +264,22 @@ const Home = () => {
                                   type="file"
                                   className="form-control d-none"
                                   id="profilePicture"
-                                  // onChange={(e) => {
-                                  //   console.log(
-                                  //     'before: ',
-                                  //     e.currentTarget.files
-                                  //   );
-                                  //   // console.log(e.target.value);
-                                  //   // console.log(imageRef.current.src);
-                                  //   onSelectFile(e);
-                                  //   console.log(
-                                  //     'after: ',
-                                  //     e.currentTarget.files
-                                  //   );
-                                  //   console.log('other: ', e.target.files);
+                                  onChange={(e) => {
+                                    console.log(
+                                      'before: ',
+                                      e.currentTarget.files
+                                    );
+                                    // console.log(e.target.value);
+                                    // console.log(imageRef.current.src);
+                                    onSelectFile(e);
+                                    console.log(
+                                      'after: ',
+                                      e.currentTarget.files
+                                    );
+                                    console.log('other: ', e.target.files);
 
-                                  //   // imageRef.current?.src = preview;
-                                  // }}
+                                    // imageRef.current?.src = preview;
+                                  }}
                                   // value={selectedFile}
                                 />
                               </div>
@@ -717,7 +760,7 @@ const Home = () => {
                         </Button>
                       </div>
                     </div>
-                  </div>
+                  </chakra.div>
                 </chakra.form>
               </Box>
             </>
