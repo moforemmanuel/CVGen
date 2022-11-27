@@ -1,6 +1,5 @@
 import { Flex, Spinner } from '@chakra-ui/react';
 import React from 'react';
-import Layout from '../Layout/Layout';
 
 export default function FullPageLoader() {
   return (
