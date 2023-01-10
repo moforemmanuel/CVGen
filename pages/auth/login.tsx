@@ -25,9 +25,11 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import loginResolver from '../../resolvers/logInForm';
+import { Context } from '../../context/Context';
 
 export default function SimpleCard() {
   const router = useRouter();
+  const { dispatch } = React.useContext(Context);
 
   const {
     handleSubmit,
@@ -61,7 +63,10 @@ export default function SimpleCard() {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <form onSubmit={handleSubmit(loginHandler)} noValidate>
+      <form
+        onSubmit={handleSubmit((data) => loginHandler(data, dispatch))}
+        noValidate
+      >
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
           <Stack align={'center'}>
             <Heading fontSize={'4xl'}>Sign in to your account</Heading>

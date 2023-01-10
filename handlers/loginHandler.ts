@@ -10,7 +10,7 @@ import getError from "../utils/error"
 // const {dispatch} = React.useContext(Context);
 
 
-const loginHandler = async (input: loginFormValues) => {
+const loginHandler = async (input: loginFormValues, dispatch: any) => {
   // console.log(input)
   try {
     const {data} = await axios.post('/api/auth/login', {
@@ -20,7 +20,7 @@ const loginHandler = async (input: loginFormValues) => {
     // console.log(data)
     // store data in cookies
     Cookies.set("user", JSON.stringify(data));
-    // dispatch({type: 'USER_LOGIN', payload: data})
+    dispatch({type: 'USER_LOGIN', payload: data})
 
     // store login
     if (input.rememberMe) {

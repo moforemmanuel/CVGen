@@ -1,16 +1,17 @@
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import Router from "next/router";
-import React from "react";
+import React, { Dispatch } from "react";
 import { toast } from "react-toastify";
 import { Context } from "../context/Context";
 
-// const {state, dispatch} = React.useContext(Context);
+// const {dispatch} = React.useContext(Context);
 
-const logoutHandler = () => {
+const logoutHandler = (dispatch: any) => {
+
   Cookies.remove("user");
-  // dispatch({type:'USER_LOGOUT'});
-  toast.success('Logout Successful');
+  dispatch({type:'USER_LOGOUT'});
   Router.push(`/auth/login?redirect=${Router.pathname}`)
+  toast.success('Logout Successful');
 }
 
-export default logoutHandler
+export default logoutHandler;

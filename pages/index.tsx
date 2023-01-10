@@ -47,15 +47,17 @@ const Home = () => {
   //
 
   React.useEffect(() => {
+    console.log('user in index is: ', user);
+    setIsMounted(true);
+  }, []);
+
+  React.useEffect(() => {
     // if (window && Cookies.get('user')) {
     //   setUser(JSON.parse(Cookies.get('user') as string));
     // }
     //  else {
     //   router.push(`/auth/login?redirect=${router.pathname}`);
     // }
-
-    // console.log(user);
-    setIsMounted(true);
 
     if (!selectedFile) {
       setPreview(undefined);
@@ -111,8 +113,7 @@ const Home = () => {
     return <FullPageLoader />;
   }
   return (
-    isMounted &&
-    user && (
+    isMounted && (
       <>
         <chakra.header
           id="header"
@@ -178,7 +179,7 @@ const Home = () => {
                       transform: 'scale(1.1)',
                     }}
                     colorScheme="red"
-                    onClick={logoutHandler}
+                    onClick={() => logoutHandler(dispatch)}
                   >
                     Logout
                   </Button>
@@ -605,6 +606,7 @@ const Home = () => {
                               placeholder="09/09/2009"
                               required
                               {...register('collegeStartDate')}
+                              onChange={(e) => console.log(e.target.value)}
                             />
                             <label htmlFor="collegeStartDate">Start Date</label>
                             <FormErrorMessage>

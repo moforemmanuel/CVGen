@@ -6,6 +6,20 @@ import Swal from "sweetalert2";
 import CV from "../interfaces/cv";
 import getError from "../utils/error";
 
+function formatDate(date: Date) {
+  var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+  if (month.length < 2) 
+      month = '0' + month;
+  if (day.length < 2) 
+      day = '0' + day;
+
+  return [year, month, day].join('-');
+}
+
 const submitCVHandler = async (input: CV) => {
   console.log(input);
   const user = JSON.parse(Cookies.get("user") as string);
@@ -16,6 +30,10 @@ const submitCVHandler = async (input: CV) => {
     // Swal.fire()
     const {data} = await axios.post(`/api/postCV`, {
       ...input,
+      jobStartDate: formatDate(input.jobStartDate),
+      jobEndDate: formatDate(input.jobEndDate),
+      collegeStartDate: formatDate(input.collegeStartDate),
+      collegeEndDate: formatDate(input.collegeEndDate),
       userID: user._id
     })
     Swal.close()

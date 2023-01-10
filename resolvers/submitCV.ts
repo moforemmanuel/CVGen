@@ -34,6 +34,10 @@ export function checkIfFilesAreCorrectType(files?: [File]): boolean {
   return valid
 }
 
+function formatDate(date: Date) {
+  return new Date(date).toLocaleDateString()
+}
+
 const SubmitCVResolver = yup.object().shape({
   // personal info
   // profilePhoto: yup.mixed().test('fileSize', "File is too large", value => value.size <= 20000000).test('fileType', "Your Error Message", value => SUPPORTED_FORMATS.includes(value.type)),
@@ -86,7 +90,7 @@ const SubmitCVResolver = yup.object().shape({
   collegeName: yup.string().required("Please enter college name"),
   certificate: yup.string().required("Please enter certificate name"),
   collegeStartDate: yup.date().transform((curr, orig) => orig === '' ? undefined : curr).required("Please enter start date"),
-  collegeEndDate: yup.date().transform((curr, orig) => orig === '' ? undefined : curr).required("Please enter end date").when("collegeStartDate", (collegeStartDate, yup) => collegeStartDate && yup.min(collegeStartDate, "End date cannot be before Start Date")),
+  collegeEndDate: yup.date().transform((curr, orig) => orig === '' ? undefined : curr).required("Please enter end date").when("collegeStartDate", (collegeStartDate, yup) => collegeStartDate && yup.min(collegeStartDate, `End date cannot be before Start Date`)),
 
   // profile summary
   profileSummary: yup.string().required("Please enter profile summary"),

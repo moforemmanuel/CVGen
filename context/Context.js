@@ -4,13 +4,12 @@ import Cookies from 'js-cookie';
 export const Context = createContext();
 
 const initialState = {
-  user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
+  user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null,
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case 'USER_LOGIN': {
-      Cookies.set('user', JSON.stringify(action.payload));
       return { ...state, user: action.payload };
     }
 
@@ -23,7 +22,7 @@ function reducer(state, action) {
 
     case 'USER_LOGOUT': {
       Cookies.remove('user');
-      return { ...state, user: undefined };
+      return { ...state, user: null };
     }
 
     default:
