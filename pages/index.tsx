@@ -121,10 +121,17 @@ const Home = () => {
           bg="blue.400"
           h="30vh"
         >
-          <Heading as="h1" className="fw-bolder">
+          <Heading
+            as="h1"
+            // className=""
+            className="fw-bolder animate__animated animate__zoomInDown animate__slow"
+          >
             CV Generator App
           </Heading>
-          <Heading className="fs-3 fw-light">
+          <Heading
+            // className=""
+            className=" fs-3 fw-light animate__animated animate__zoomInUp animate__slow animate__delay-1s"
+          >
             Fill all fields and get your CV with one click
           </Heading>
         </chakra.header>
@@ -139,7 +146,10 @@ const Home = () => {
               direction="column"
               h="60vh"
             >
-              <Heading> Please Sign In to use our Services</Heading>
+              <Heading className="animate__animated animate__fadeIn animate__slow">
+                {' '}
+                Please Sign In to use our Services
+              </Heading>
               <Button
                 colorScheme="blue"
                 onClick={() => {
@@ -152,13 +162,14 @@ const Home = () => {
           ) : (
             <>
               <Flex
+                data-aos="zoom-in"
                 my={3}
                 align="center"
                 justify="center"
                 gap={3}
                 direction="column"
               >
-                <Heading>
+                <Heading className="animate__animated animate__fadeIn animate__slow">
                   Hey there{' '}
                   <Text as="span" color="blue.400">
                     {user.firstName}

@@ -87,7 +87,9 @@ const CVView = ({ CV, error }: any) => {
             h="70vh"
             w="100%"
           >
-            <Heading>No CV data found</Heading>
+            <Heading className="animate__animated animate__zoomInDown animate__slow animate__delay-1s">
+              No CV data found
+            </Heading>
             <Button
               colorScheme="blue"
               rounded={0}
@@ -106,6 +108,7 @@ const CVView = ({ CV, error }: any) => {
             gap={6}
             id="parent"
             p={8}
+            data-aos="zoom-in"
           >
             <Flex
               border="thin solid #ccc"
